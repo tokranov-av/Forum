@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.contrib.auth.hashers import make_password
 
+from app_forum.models import Article
+
 User = get_user_model()
 
 
@@ -24,3 +26,10 @@ class RegistrationSerializer(serializers.ModelSerializer):
         :return: a hashed version of the password
         """
         return make_password(value)
+
+
+class NewsSerializer(serializers.ModelSerializer):
+    """Сериализатор, используемый при отображении новостей."""
+    class Meta:
+        model = Article
+        fields = ('title', 'summary', 'view_count', 'rating',)
