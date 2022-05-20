@@ -6,7 +6,8 @@ from .models import Article
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'article_number', 'title', 'author', 'slug', 'summary',
-        'content', 'view_count', 'rating',
+        'content', 'view_count', 'rating', 'date_create',
     )
     ordering = ('id',)
     list_display_links = ('id', 'title',)
+    prepopulated_fields = {'slug': ('title',)}
