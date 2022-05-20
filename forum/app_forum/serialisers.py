@@ -39,13 +39,16 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     """
     Сериализатор, используемый при отображении детальной информации о новости.
     """
+    vote = serializers.HyperlinkedIdentityField(
+        view_name='article-vote', lookup_field='slug')
+
     class Meta:
         model = Article
         fields = '__all__'
 
 
-class NewsCreateSerializer(serializers.ModelSerializer):
-    """Сериализатор, используемый при отображении новостей."""
-    class Meta:
-        model = Article
-        fields = ('article_number', 'title', 'slug', 'summary', 'content')
+# class NewsCreateSerializer(serializers.ModelSerializer):
+#     """Сериализатор, используемый при отображении новостей."""
+#     class Meta:
+#         model = Article
+#         fields = ('article_number', 'title', 'slug', 'summary', 'content')

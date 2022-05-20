@@ -11,7 +11,7 @@ class Article(models.Model):
     title = models.CharField(max_length=55, verbose_name='Заголовок',)
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор поста')
-    slug = models.SlugField(max_length=55)
+    slug = models.SlugField(max_length=55, unique=True)
     summary = models.CharField(
         max_length=250, verbose_name='Краткое содержание')
     content = models.TextField(verbose_name='Содержание')
@@ -35,9 +35,9 @@ class Article(models.Model):
 
 class UserRatingsOfArticles(models.Model):
     VALUE_RATING = (
-        (-1, 'Отрицательно'),
-        (0, 'Нейтрально'),
-        (1, 'Положительно'),
+        ('-1', 'Отрицательно'),
+        ('0', 'Нейтрально'),
+        ('1', 'Положительно'),
     )
 
     user = models.ForeignKey(
