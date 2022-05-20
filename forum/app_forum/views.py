@@ -30,7 +30,6 @@ class NewsViewSet(
     ordering_fields = ('rating', 'date_create',)
     ordering = ('-rating',)
     lookup_field = 'slug'
-    permission_classes = (permissions.DjangoModelPermissionsOrAnonReadOnly,)
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
