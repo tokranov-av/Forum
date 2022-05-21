@@ -1,0 +1,17 @@
+# Git
+.git
+.gitignore
+
+# Docker
+.docker
+
+# Python
+forum/__pycache__/
+forum/*/__pycache__/
+forum/*/*/__pycache__/
+forum/*/*/*/__pycache__/
+.venv/
+venv/
+
+# Local PostgreSQL data
+db/
