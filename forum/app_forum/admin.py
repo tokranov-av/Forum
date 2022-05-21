@@ -5,7 +5,7 @@ from .models import Article, UserRatingsOfArticles
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
-        'id', 'article_number', 'title', 'author', 'slug', 'summary',
+        'id', 'article_number', 'title', 'author', 'slug', 'preview',
         'content', 'view_count', 'rating', 'date_create',
     )
     ordering = ('id',)

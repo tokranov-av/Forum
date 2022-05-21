@@ -1,5 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from pytils.translit import slugify
+
 from rest_framework.reverse import reverse
 
 User = get_user_model()
@@ -8,11 +10,13 @@ User = get_user_model()
 class Article(models.Model):
     article_number = models.PositiveIntegerField(
         db_index=True, verbose_name='Артикул')
-    title = models.CharField(max_length=55, verbose_name='Заголовок',)
+    title = models.CharField(
+        max_length=55, verbose_name='Заголовок', unique=True
+    )
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Автор поста')
     slug = models.SlugField(max_length=55, unique=True)
-    summary = models.CharField(
+    preview = models.CharField(
         max_length=250, verbose_name='Краткое содержание')
     content = models.TextField(verbose_name='Содержание')
     view_count = models.PositiveIntegerField(
@@ -20,6 +24,10 @@ class Article(models.Model):
     rating = models.IntegerField(default=0, verbose_name='Рейтинг')
     date_create = models.DateField(
         auto_now_add=True, verbose_name='Дата добавления')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Article, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title

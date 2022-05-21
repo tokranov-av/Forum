@@ -31,7 +31,7 @@ class NewsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
         fields = (
-            'title', 'summary', 'view_count', 'rating', 'date_create', 'url'
+            'title', 'preview', 'view_count', 'rating', 'date_create', 'url'
         )
 
 
@@ -43,14 +43,21 @@ class NewsDetailSerializer(serializers.ModelSerializer):
         view_name='article-vote', lookup_field='slug')
     favorite = serializers.HyperlinkedIdentityField(
         view_name='article-favorite', lookup_field='slug')
+    author = serializers.CharField(source='author.username')
 
     class Meta:
         model = Article
         fields = '__all__'
 
 
-# class NewsCreateSerializer(serializers.ModelSerializer):
-#     """Сериализатор, используемый при отображении новостей."""
-#     class Meta:
-#         model = Article
-#         fields = ('article_number', 'title', 'slug', 'summary', 'content')
+class NewsAddSerializer(serializers.ModelSerializer):
+    """Сериализатор, используемый при добавлении новости."""
+    class Meta:
+        model = Article
+        fields = (
+            'article_number', 'title', 'preview', 'content',
+        )
+
+    def create(self, validated_data):
+        validated_data['author'] = self.context['request'].user
+        return super(NewsAddSerializer, self).create(validated_data)

@@ -7,7 +7,8 @@ from rest_framework.permissions import (
 )
 from .models import Article, UserRatingsOfArticles
 from .serialisers import (
-    RegistrationSerializer, NewsSerializer, NewsDetailSerializer
+    RegistrationSerializer, NewsSerializer, NewsDetailSerializer,
+    NewsAddSerializer
 )
 from django.contrib.auth import get_user_model
 from .pagination import NewsPagination
@@ -134,3 +135,12 @@ class NewsViewSet(RetrieveModelMixin, ListModelMixin, GenericViewSet):
         return Response(
             {'message': message}, 200
         )
+
+
+class AddNewsAPIView(CreateAPIView):
+    queryset = Article.objects.all()
+    serializer_class = NewsAddSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
