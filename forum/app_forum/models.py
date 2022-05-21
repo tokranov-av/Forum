@@ -43,12 +43,17 @@ class UserRatingsOfArticles(models.Model):
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name='Пользователь')
     article = models.ForeignKey(
-        Article, on_delete=models.CASCADE, verbose_name='Статья')
-    my_rating = models.CharField(max_length=20, choices=VALUE_RATING)
+        Article, on_delete=models.CASCADE, related_name='user_ratings',
+        verbose_name='Статья'
+    )
+    rating = models.CharField(
+        max_length=20, choices=VALUE_RATING, default='0',
+        verbose_name='Рейтинг'
+    )
     in_favorites = models.BooleanField(
         default=False, verbose_name='В избранном')
 
     class Meta:
-        verbose_name = 'Р'
-        verbose_name_plural = 'Категории'
+        verbose_name = 'Пользовательские рейтинги'
+        verbose_name_plural = 'Пользовательские рейтинги'
         ordering = ['id']

@@ -41,6 +41,8 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     """
     vote = serializers.HyperlinkedIdentityField(
         view_name='article-vote', lookup_field='slug')
+    favorite = serializers.HyperlinkedIdentityField(
+        view_name='article-favorite', lookup_field='slug')
 
     class Meta:
         model = Article
